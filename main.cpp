@@ -43,7 +43,7 @@ void Worker_2(std::shared_ptr<Messenger> messenger_ptr)
 
 int main()
 {
-  auto messenger_ptr = MakeMessenger();
+  auto messenger_ptr = libthreadmessenger::MakeMessenger();
   
   std::thread t1(Worker_1, messenger_ptr);
   std::thread t2(Worker_2, messenger_ptr);
