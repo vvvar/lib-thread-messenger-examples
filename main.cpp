@@ -1,7 +1,7 @@
 #include <lib-thread-messenger/ThreadMessenger.hpp>
 
 using Messenger = messenger::Messenger;
-using MessageData = messenger::MessageData;
+using MessageData = message::MessageData;
 
 class UserData : public MessageData
 {
@@ -25,7 +25,7 @@ void Worker_1(std::shared_ptr<Messenger> messenger_ptr)
 {
   messenger_ptr->registerChannel("worker_1");
   messenger_ptr->waitForMessageInChannel("worker_1");
-  auto user_data_ptr = messenger_ptr->receive<UserData>("worker_1");
+  auto user_data_ptr = messenger_ptr->receive<UserData>("worker_1", "user_data");
   std::cout << "Worker 1 got user data: " << user_data_ptr->getUserName() << ".\n";
 }
 
@@ -37,7 +37,7 @@ void Worker_2(std::shared_ptr<Messenger> messenger_ptr)
     std::getline (std::cin, input);
     std::cin.clear();
     auto user_data_ptr = std::make_shared<UserData>(input);
-    messenger_ptr->send<UserData>("worker_1", user_data_ptr);
+    messenger_ptr->send<UserData>("worker_1", "user_data", user_data_ptr);
   }
 }
 
